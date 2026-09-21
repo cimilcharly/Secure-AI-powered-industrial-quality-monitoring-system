@@ -44,10 +44,10 @@ def get_cost_configs(db: Session = Depends(get_db)):
     configs = db.query(CostConfig).all()
     return [
         {
-            "category": c.defect_category,
-            "rework_cost_inr": c.rework_cost_inr,
-            "scrap_cost_inr": c.scrap_cost_inr,
-            "recall_risk_inr": c.recall_risk_inr
+            "category": c.category,
+            "rework_cost_inr": c.rework_cost,
+            "scrap_cost_inr": c.scrap_cost,
+            "recall_risk_inr": c.recall_risk
         }
         for c in configs
     ]
