@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+venv/
+env/
+.env
+
+# Datasets and Media
+data/
+*.jpg
+*.jpeg
+*.png
+*.zip
+
+# Database
+fabric_qc.db
+
+# Output & Logs
+runs/
+scratch/
+storage/
+
+# IDE / System
+.vscode/
+.idea/
+.DS_Store

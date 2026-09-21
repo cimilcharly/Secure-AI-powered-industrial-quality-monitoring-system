@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # MySQL Database Service
+  mysql_db:
+    image: mysql:8.0
+    container_name: fabric_qc_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_2026
+      MYSQL_DATABASE: fabric_qc_db
+      MYSQL_USER: fabric_admin
+      MYSQL_PASSWORD: fabric_pass2026
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+
+  # FastAPI Backend Service
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    container_name: fabric_qc_backend
+    restart: unless-stopped
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: mysql_db
+      MYSQL_PORT: 3306
+      MYSQL_USER: fabric_admin
+      MYSQL_PASSWORD: fabric_pass2026
+      MYSQL_DB: fabric_qc_db
+      JWT_SECRET_KEY: industrial-fabric-qc-secret-key-2026
+      FABRIC_AES_KEY: k9r7u3x8z1A4b7e9c2d5f8j1m4p7s0v3y6B9e1h4k7n=
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../storage:/app/storage
+      - ../models:/app/models
+
+  # Streamlit Dashboard UI
+  dashboard:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dashboard
+    container_name: fabric_qc_dashboard
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      BACKEND_API_URL: http://backend:8000
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../storage:/app/storage
+
+volumes:
+  mysql_data:

@@ -1,0 +1,11 @@
+# Copy to dataset/data.yaml and edit class names/path
+path: C:/YOUR/PATH/TO/dataset
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: defect
+  # 1: stain
+  # 2: hole
+  # 3: tear

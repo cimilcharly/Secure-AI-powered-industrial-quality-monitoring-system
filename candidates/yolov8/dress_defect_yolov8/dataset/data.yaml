@@ -1,0 +1,10 @@
+path: ./dataset
+train: images/train
+val: images/val
+test: images/test
+
+# CHANGE THESE TO YOUR ACTUAL DRESS DEFECT CLASSES.
+# Example:
+# names: [hole, stain, tear, loose_thread]
+names:
+  0: defect

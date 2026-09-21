@@ -1,0 +1,3 @@
+# Directory placeholder for trained model weights:
+# - best.pt (YOLOv8m weights)
+# - patchcore_memory_bank.npy (PatchCore nominal embeddings)

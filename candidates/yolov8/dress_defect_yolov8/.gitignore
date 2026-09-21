@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+runs/
+dataset/images/*
+dataset/labels/*
+!dataset/images/train/
+!dataset/images/val/
+!dataset/images/test/
+!dataset/labels/train/
+!dataset/labels/val/
+!dataset/labels/test/

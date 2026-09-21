@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-09-09 20:07:05",
+  "candidates": {
+    "YOLOv8": {
+      "name": "YOLOv8m (Ultralytics v8)",
+      "description": "Proven industrial standard with strong anchor-free spatial attention.",
+      "params_m": 25.9,
+      "metrics": {
+        "mAP50": 0.892,
+        "mAP50_95": 0.684,
+        "precision": 0.881,
+        "recall": 0.865,
+        "f1_score": 0.873,
+        "latency_ms": 14.2,
+        "fps": 70.4,
+        "size_mb": 49.7
+      },
+      "composite_score": 77.27
+    },
+    "YOLO11": {
+      "name": "YOLO11m (Ultralytics 2024+ Architecture)",
+      "description": "Newest C3k2 and C2PSA attention blocks for small fabric tears and stitches.",
+      "params_m": 20.1,
+      "metrics": {
+        "mAP50": 0.918,
+        "mAP50_95": 0.715,
+        "precision": 0.904,
+        "recall": 0.892,
+        "f1_score": 0.898,
+        "latency_ms": 11.8,
+        "fps": 84.7,
+        "size_mb": 38.6
+      },
+      "composite_score": 80.38
+    },
+    "YOLO26": {
+      "name": "YOLO26 (Next-Gen Experimental Iteration)",
+      "description": "Lightweight pruned variant optimized for edge devices and high-speed line scanners.",
+      "params_m": 12.4,
+      "metrics": {
+        "mAP50": 0.874,
+        "mAP50_95": 0.642,
+        "precision": 0.862,
+        "recall": 0.84,
+        "f1_score": 0.851,
+        "latency_ms": 8.1,
+        "fps": 123.5,
+        "size_mb": 24.2
+      },
+      "composite_score": 76.38
+    }
+  },
+  "ranked_order": [
+    "YOLO11",
+    "YOLOv8",
+    "YOLO26"
+  ],
+  "winner": {
+    "model_key": "YOLO11",
+    "display_name": "YOLO11m (Ultralytics 2024+ Architecture)",
+    "composite_score": 80.38,
+    "reason": "YOLO11m (Ultralytics 2024+ Architecture) ranked #1 with composite score of 80.38/100, achieving 89.2% defect recall and 84.7 FPS throughput."
+  }
+}

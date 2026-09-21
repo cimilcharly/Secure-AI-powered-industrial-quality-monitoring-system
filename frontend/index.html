@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FabricQC AI — Industrial Garment Quality Studio</title>
+  
+  <!-- Premium Fonts Matching Reference -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Three.js 3D WebGL Engine -->
+  <script src="libs/three.min.js"></script>
+  <script src="libs/OrbitControls.js"></script>
+  <script src="three_engine.js"></script>
+</head>
+<body class="industrial-theme">
+  <!-- =======================================
+       1. FLOATING CAPSULE / PILL NAVBAR
+       ======================================= -->
+  <!-- =======================================
+       1. FLOATING CAPSULE / PILL NAVBAR (MATCHING REFERENCE EXACTLY)
+       ======================================= -->
+  <div class="floating-nav-wrapper">
+    <header class="floating-pill-nav">
+      <!-- Brand Logo (Circle avatar with 3D swirl) -->
+      <div class="pill-brand" id="brandHomeBtn">
+        <div class="brand-avatar-circle">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="brandSwirlGrad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#60A5FA"/>
+                <stop offset="45%" stop-color="#3B82F6"/>
+                <stop offset="100%" stop-color="#1D4ED8"/>
+              </linearGradient>
+              <filter id="swirlShadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="#1E40AF" flood-opacity="0.3"/>
+              </filter>
+            </defs>
+            <path d="M21.5 11.5C19.5 8.2 15.2 7.8 12.2 9.5C8.8 11.5 7.8 16.2 9.8 19.8C11.8 23.4 16.5 24.5 20.2 22.5C23 21 24.5 17.5 23.2 14.2C22.2 11.8 19.8 10.8 17.5 11.5C15.2 12.2 14.2 14.8 15.2 16.8C15.8 18.2 17.5 18.8 19 18.2" 
+                  stroke="url(#brandSwirlGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#swirlShadow)"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Center Nav Links: Uppercase + Chevron matching reference -->
+      <nav class="pill-nav-menu">
+        <!-- Model Dropdown Menu -->
+        <div class="nav-dropdown-item">
+          <button class="nav-menu-link" type="button">
+            <span>MODELS</span>
+            <svg class="chevron-icon" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="nav-dropdown-menu">
+            <div class="dropdown-header">Active AI Model</div>
+            <label class="dropdown-option"><input type="radio" name="modelNav" value="ensemble" checked /> Multi-Ensemble (Damage + Stitch + Button)</label>
+            <label class="dropdown-option"><input type="radio" name="modelNav" value="damage" /> Bharath's Model — Damage (94.4%)</label>
+            <label class="dropdown-option"><input type="radio" name="modelNav" value="stitch" /> Cimil's Model — Stitch (94.8%)</label>
+            <label class="dropdown-option"><input type="radio" name="modelNav" value="button" /> Dhakshina's Model — Button (95.2%)</label>
+            <label class="dropdown-option"><input type="radio" name="modelNav" value="yolo11" /> YOLO11m (Benchmark)</label>
+          </div>
+        </div>
+
+        <!-- Factory Node Menu -->
+        <div class="nav-dropdown-item">
+          <button class="nav-menu-link" type="button">
+            <span>PLANTS</span>
+            <svg class="chevron-icon" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="nav-dropdown-menu">
+            <div class="dropdown-header">Factory Telemetry Node</div>
+            <label class="dropdown-option"><input type="radio" name="factoryNav" value="Factory_2" checked /> Tirupur (Seams & Assembly)</label>
+            <label class="dropdown-option"><input type="radio" name="factoryNav" value="Factory_1" /> Coimbatore (Knits & Weave)</label>
+            <label class="dropdown-option"><input type="radio" name="factoryNav" value="Factory_3" /> Surat (Dyeing & Print)</label>
+          </div>
+        </div>
+
+        <button class="nav-menu-link" data-tab="heroStudioSection">GALLERY</button>
+        <button class="nav-menu-link" data-tab="workbenchSection">WORKBENCH</button>
+
+        <div class="nav-dropdown-item">
+          <button class="nav-menu-link" type="button" data-tab="modelZooTab">
+            <span>RESOURCES</span>
+            <svg class="chevron-icon" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="nav-dropdown-menu">
+            <button class="dropdown-link-btn" data-tab="modelZooTab">🏆 Model Zoo & Matrix</button>
+            <button class="dropdown-link-btn" data-tab="federatedTab">🌐 3-Node Federated 3D</button>
+            <button class="dropdown-link-btn" data-tab="driftTab">📈 Visual Drift Telemetry</button>
+            <button class="dropdown-link-btn" data-tab="historyTab">📋 Inspection History</button>
+          </div>
+        </div>
+
+        <button class="nav-menu-link" data-tab="historyTab">PRICING</button>
+      </nav>
+
+      <!-- Right Action Capsule: Inner White Pill with "Sign in" / Active Role + Soft Blue "Download" Button -->
+      <div class="pill-right-cluster" id="authPillCluster">
+        <button class="pill-signin-link" id="navSignInBtn" type="button">Sign in</button>
+        <div class="user-role-badge display-hidden" id="userRoleBadge">
+          <span class="role-icon" id="roleIcon">🛡️</span>
+          <span class="role-text" id="roleText">Admin</span>
+          <button class="btn-logout-small" id="navLogoutBtn" title="Logout & Revoke Token" type="button">✕</button>
+        </div>
+        <button class="pill-download-btn" id="navInspectShortcut" type="button">Download</button>
+      </div>
+    </header>
+  </div>
+
+  <!-- =======================================
+       2. HERO SECTION & STUDIO INGESTION
+       ======================================= -->
+  <main class="main-content-container">
+    <!-- =======================================
+         2. HERO STUDIO WITH BLURRED BACKGROUND MARQUEE (MATCHING REFERENCE)
+         ======================================= -->
+    <section id="heroStudioSection" class="hero-studio-universe">
+      <!-- Ambient Blurred Background Marquee Container -->
+      <div class="hero-bg-marquee-container" id="heroBgMarquee">
+        <!-- Fog & Blur Gradient Overlays (Replicating exact misty edge and top fade blur) -->
+        <div class="marquee-fog-top"></div>
+        <div class="marquee-fog-left"></div>
+        <div class="marquee-fog-right"></div>
+        <div class="marquee-fog-bottom"></div>
+
+        <!-- Moving Card Tracks in the Background -->
+        <div class="hero-marquee-tracks">
+          <!-- Row 1: Smooth Leftward Drift -->
+          <div class="marquee-track-row track-left" id="marqueeRow1">
+            <!-- Populated by JavaScript with studio garments -->
+          </div>
+          <!-- Row 2: Smooth Rightward Drift -->
+          <div class="marquee-track-row track-right" id="marqueeRow2">
+            <!-- Populated by JavaScript with studio garments -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Foreground Content: Headline, Subtitle & Floating Studio Ingestion -->
+      <div class="hero-foreground-content">
+        <div class="hero-badge">
+          <span class="badge-icon">✨</span>
+          <span>Industrial AI Quality Control 2026 • Dual YOLOv8 Precision Detectors</span>
+        </div>
+
+        <h1 class="hero-headline">
+          AI Studio for Industrial<br>
+          <span class="headline-gradient">Garment & Fabric Quality</span>
+        </h1>
+
+        <p class="hero-subheading">
+          Explore fabric feeds with deep research, drop in visual references, 
+          and generate instant defect localizations in one continuous workflow.
+        </p>
+
+        <!-- Floating Ingest Dropzone Card with Frosted Glass -->
+        <div class="hero-ingest-container">
+          <div class="dropzone-box" id="dropzone">
+            <input type="file" id="fileInput" accept="image/jpeg, image/png" hidden />
+            <div class="dropzone-content" id="dropzoneContent">
+              <div class="dropzone-icon-circle">📸</div>
+              <div class="dropzone-texts">
+                <h3>Drop garment photo here, or <span class="text-highlight">browse device</span></h3>
+                <p>Supports ultra-high resolution dress shirts, flat-lays, and seam close-ups (JPG, PNG)</p>
+              </div>
+              <button class="btn-browse-device" id="browseBtn" type="button">Select File</button>
+            </div>
+            <img id="previewImg" class="preview-hidden" alt="Uploaded Fabric Preview" />
+            <div class="laser-scanner" id="laserScanner"></div>
+          </div>
+
+          <div class="dropzone-actions-bar">
+            <label class="toggle-switch-modern" title="Encrypt transmission payload with AES-256">
+              <input type="checkbox" id="aesToggle" checked />
+              <span class="slider-modern"></span>
+              <span class="toggle-text">AES-256 GCM Security</span>
+            </label>
+            <div class="marquee-quick-hint">
+              <span class="live-dot-ping"></span>
+              <span>Click any moving sample in background to inspect</span>
+            </div>
+            <button class="btn-run-inspection" id="runInspectBtn">
+              <span class="btn-icon">⚡</span> Run Multi-Modal AI Inspection
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================
+         4. OPTICAL INSPECTION WORKBENCH (CENTER STAGE)
+         ======================================= -->
+    <section id="workbenchSection" class="workbench-section">
+      <div class="workbench-header">
+        <div class="workbench-title-group">
+          <h2>Optical Inspection Workbench</h2>
+          <p>Real-time multi-modal defect localization and 3D digital twin verification.</p>
+        </div>
+
+        <!-- Multi-Modal View Switcher -->
+        <div class="view-mode-pill-bar" id="viewToggles">
+          <button class="mode-pill-btn active" data-view="3d">🧵 3D Digital Twin</button>
+          <button class="mode-pill-btn" data-view="annotated">🎯 YOLO Bounding Box</button>
+          <button class="mode-pill-btn" data-view="gradcam">🔥 Grad-CAM Heatmap</button>
+          <button class="mode-pill-btn" data-view="raw">📷 Raw Garment</button>
+        </div>
+      </div>
+
+      <!-- Main Dual-Zone Layout -->
+      <div class="workbench-grid">
+        <!-- Center Stage: High-Resolution Viewport -->
+        <div class="workbench-viewport-card">
+          <div class="viewport-canvas-container" id="viewportContainer">
+            <!-- 3D Three.js Fabric Digital Twin -->
+            <div id="threeFabricContainer" class="three-fabric-container">
+              <div class="three-hud-bar">
+                <button class="hud-btn" id="hudResetCam" title="Reset 3D Camera">⟲ Reset</button>
+                <button class="hud-btn" id="hudWireframe" title="Toggle Mesh Wireframe">🕸️ Wireframe</button>
+                <button class="hud-btn active" id="hudLaser" title="Toggle 3D Laser Scan">⚡ Laser Scan</button>
+                <button class="hud-btn active" id="hudMotion" title="Toggle Tension Wave">🌊 Wave</button>
+                <button class="hud-btn" id="hudFocusDefect" title="Zoom in to Defect Beacon">🎯 Focus Defect</button>
+              </div>
+              <div class="three-badge-overlay">
+                <span id="threeDefectBeaconBadge">3D Digital Twin: Ready • Drag to Orbit • Scroll to Zoom</span>
+              </div>
+            </div>
+
+            <!-- 2D Image Viewport (YOLO / Grad-CAM / Raw) -->
+            <img id="resultDisplayImg" src="" alt="Defect Visualizer" class="display-hidden" />
+
+            <div id="viewportPlaceholder" class="viewport-placeholder">
+              <div class="placeholder-icon-circle">🧵</div>
+              <h3>No Garment Scanned Yet</h3>
+              <p>Drag and drop a dress shirt photo or click any sample in the conveyor above to inspect.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Rail: Telemetry & Industrial QC Verdict -->
+        <div class="workbench-telemetry-card">
+          <!-- Industrial QC Verdict Banner -->
+          <div class="qc-verdict-banner" id="qcVerdictBanner">
+            <div class="verdict-icon-box" id="verdictIcon">⚡</div>
+            <div class="verdict-text-group">
+              <div class="verdict-label">QUALITY VERDICT</div>
+              <div class="verdict-status" id="verdictStatus">AWAITING SCAN</div>
+              <div class="verdict-sub" id="verdictSub">Conveyor inspection ready</div>
+            </div>
+          </div>
+
+          <!-- Circular Radial Severity Meter -->
+          <div class="telemetry-gauge-card">
+            <div class="gauge-header">
+              <span>Defect Severity Index</span>
+              <span class="severity-band-badge" id="metricSeverityBand">Nominal</span>
+            </div>
+            <div class="gauge-content">
+              <div class="radial-gauge-wrapper">
+                <svg class="radial-gauge-svg" viewBox="0 0 120 120">
+                  <circle class="gauge-bg" cx="60" cy="60" r="50"></circle>
+                  <circle class="gauge-fill" id="gaugeCircleFill" cx="60" cy="60" r="50"></circle>
+                </svg>
+                <div class="gauge-value-overlay">
+                  <span class="gauge-num" id="metricSeverity">0</span>
+                  <span class="gauge-unit">/100</span>
+                </div>
+              </div>
+              <div class="gauge-meta-list">
+                <div class="gauge-meta-item">
+                  <span class="meta-label">Primary Class:</span>
+                  <strong class="meta-val" id="metricDefect">—</strong>
+                </div>
+                <div class="gauge-meta-item">
+                  <span class="meta-label">Model Confidence:</span>
+                  <strong class="meta-val text-emerald" id="metricConfidence">—</strong>
+                </div>
+                <div class="gauge-meta-item">
+                  <span class="meta-label">PatchCore Anomaly:</span>
+                  <strong class="meta-val" id="metricAnomalyScore">—</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Financial Exposure Box -->
+          <div class="financial-exposure-card">
+            <div class="fin-header">
+              <span>Financial Exposure & Cost Impact</span>
+              <span class="fin-curr-tag">₹ INR</span>
+            </div>
+            <div class="fin-main-val" id="metricCost">₹ 0.00</div>
+            <div class="fin-action-note" id="metricAction">Rework / Scrap Risk Assessment</div>
+          </div>
+
+          <!-- Localization Recall Strip -->
+          <div class="recall-strip-card">
+            <div class="recall-header">
+              <span>Grad-CAM Localization Recall:</span>
+              <strong id="recallValue">—</strong>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="recallBar" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================
+         5. SECONDARY DOCKED MODULES
+         ======================================= -->
+    <section class="docked-modules-section">
+      <!-- Tab 2: Model Zoo & Benchmark -->
+      <div id="modelZooTab" class="submodule-content">
+        <div class="card module-card">
+          <div class="module-header">
+            <div>
+              <h3>Model Zoo & Performance Benchmark</h3>
+              <p>Standardized evaluation of specialized and general models on industrial fabric defects.</p>
+            </div>
+            <button class="btn-secondary-modern" id="runBenchmarkBtn">
+              <span>🔄</span> Run Live Benchmark
+            </button>
+          </div>
+          <div class="model-cards-grid" id="modelCardsGrid"></div>
+          <div class="table-container" style="margin-top: 1.5rem;">
+            <table class="data-table" id="benchmarkTable">
+              <thead>
+                <tr>
+                  <th>Model Variant</th>
+                  <th>Composite Score</th>
+                  <th>Defect Recall (Safety)</th>
+                  <th>mAP@0.5:0.95</th>
+                  <th>Precision</th>
+                  <th>Inference Latency</th>
+                  <th>Throughput</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="benchmarkTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: 3-Node Federated Learning -->
+      <div id="federatedTab" class="submodule-content">
+        <div class="card module-card">
+          <div class="module-header">
+            <div>
+              <h3>3-Node Federated Learning Simulation (FedAvg)</h3>
+              <p>Collaborative multi-plant model convergence without raw image sharing across Coimbatore, Tirupur, and Surat.</p>
+            </div>
+            <button class="btn-primary-modern" id="runFedBtn">
+              <span>🚀</span> Run 5-Round FedAvg Simulation
+            </button>
+          </div>
+
+          <!-- 3D Spatial Network Topology Viewport -->
+          <div class="fed-3d-wrapper">
+            <div class="fed-3d-header">
+              <span>🌐 3D Spatial Network Graph (Coimbatore • Tirupur • Surat)</span>
+              <span class="fed-status-badge">Live WebGL Mesh</span>
+            </div>
+            <div id="fedThreeContainer" class="fed-three-viewport">
+              <div class="fed-hud-tip">Drag to Rotate Network • Scroll to Zoom</div>
+            </div>
+          </div>
+
+          <div class="fed-layout">
+            <div class="fed-nodes-grid">
+              <div class="node-card">
+                <div class="node-header">
+                  <h4>Factory 1 — Coimbatore</h4>
+                  <span class="node-badge">450 samples</span>
+                </div>
+                <p>Knits specialization. Skewed towards <b>Damage (50%)</b> & <b>Button (35%)</b>.</p>
+                <div class="node-stat">Isolated Accuracy: <b>72.5%</b></div>
+              </div>
+              <div class="node-card">
+                <div class="node-header">
+                  <h4>Factory 2 — Tirupur</h4>
+                  <span class="node-badge">520 samples</span>
+                </div>
+                <p>Garment assembly. Skewed towards <b>Stitch (65%)</b> and seam defects.</p>
+                <div class="node-stat">Isolated Accuracy: <b>74.8%</b></div>
+              </div>
+              <div class="node-card">
+                <div class="node-header">
+                  <h4>Factory 3 — Surat</h4>
+                  <span class="node-badge">380 samples</span>
+                </div>
+                <p>Dyeing & printing. Skewed towards <b>Color Fade & Dye Patches (70%)</b>.</p>
+                <div class="node-stat">Isolated Accuracy: <b>70.2%</b></div>
+              </div>
+            </div>
+            <div class="fed-results-box" id="fedResultsBox">
+              <div class="placeholder-text">
+                Click <b>"Run 5-Round FedAvg Simulation"</b> to simulate AES-encrypted weight exchange and convergence.
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================================
+               ENTERPRISE SECURITY & THREAT DEFENSE COCKPIT (MODULE 13)
+               ======================================================== -->
+          <div class="security-defense-cockpit">
+            <div class="security-cockpit-header">
+              <div class="sec-title-group">
+                <span class="sec-shield-icon">🛡️</span>
+                <div>
+                  <h4>Zero-Trust Machine Identity & Threat Defense Cockpit</h4>
+                  <p>Mutual TLS (X.509), Anti-Replay Sliding Window, and FL Model Poisoning Anomaly Detector</p>
+                </div>
+              </div>
+              <div class="sec-compliance-badges">
+                <span class="badge-sec-pill">RFC 8705 mTLS</span>
+                <span class="badge-sec-pill">OWASP API #1 BOLA Guard</span>
+                <span class="badge-sec-pill">AES-256-GCM AEAD</span>
+              </div>
+            </div>
+
+            <!-- 3 Machine Identity Certificates Grid -->
+            <div class="sec-pki-grid">
+              <div class="sec-cert-card">
+                <div class="cert-status-dot active"></div>
+                <div class="cert-info">
+                  <div class="cert-cn">node.coimbatore.fabricqc.internal</div>
+                  <div class="cert-plant">Factory 1 (Coimbatore) • mTLS Verified</div>
+                  <div class="cert-fp">SHA-256: B3:19:64:EE:C9:20...</div>
+                </div>
+                <span class="cert-tag">X.509 Valid</span>
+              </div>
+              <div class="sec-cert-card">
+                <div class="cert-status-dot active"></div>
+                <div class="cert-info">
+                  <div class="cert-cn">node.tirupur.fabricqc.internal</div>
+                  <div class="cert-plant">Factory 2 (Tirupur) • mTLS Verified</div>
+                  <div class="cert-fp">SHA-256: C7:88:12:AA:44:B9...</div>
+                </div>
+                <span class="cert-tag">X.509 Valid</span>
+              </div>
+              <div class="sec-cert-card">
+                <div class="cert-status-dot active"></div>
+                <div class="cert-info">
+                  <div class="cert-cn">node.surat.fabricqc.internal</div>
+                  <div class="cert-plant">Factory 3 (Surat) • mTLS Verified</div>
+                  <div class="cert-fp">SHA-256: E1:44:99:FF:33:88...</div>
+                </div>
+                <span class="cert-tag">X.509 Valid</span>
+              </div>
+            </div>
+
+            <!-- Defense Telemetry Dual Strip -->
+            <div class="sec-telemetry-dual-strip">
+              <div class="sec-telemetry-box">
+                <div class="box-title">⏱️ Anti-Replay Protection Gate</div>
+                <div class="box-metric-val" id="replayGateCount">ACTIVE • 0 Replays Thwarted</div>
+                <div class="box-desc">Sliding clock-skew window: <b>±300s</b> | Monotonic sequence & duplicate packet ID cache</div>
+              </div>
+              <div class="sec-telemetry-box">
+                <div class="box-title">📊 FL Update Anomaly & Poisoning Detector</div>
+                <div class="box-metric-val" id="anomalyDetectorVal">0 Outliers Detected (L2 Norm &lt; 6.0)</div>
+                <div class="box-desc">Analyzes update Frobenius norm $\|\Delta W_k\|_2$ to isolate malicious or diverging factory updates</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: History -->
+      <div id="historyTab" class="submodule-content">
+        <div class="card module-card">
+          <div class="module-header">
+            <div>
+              <h3>Historical Quality Telemetry</h3>
+              <p>Audit trail of all garment scans with defect classification and ₹ cost exposure.</p>
+            </div>
+            <button class="btn-secondary-modern" id="refreshHistoryBtn">🔄 Refresh Logs</button>
+          </div>
+          <div class="table-container">
+            <table class="data-table" id="historyTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Timestamp</th>
+                  <th>Factory Node</th>
+                  <th>Defect Class</th>
+                  <th>Confidence</th>
+                  <th>Severity</th>
+                  <th>Financial Risk</th>
+                  <th>Anomaly</th>
+                </tr>
+              </thead>
+              <tbody id="historyTableBody">
+                <tr><td colspan="8" style="text-align: center; color: #64748B;">Loading telemetry...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 5: Drift -->
+      <div id="driftTab" class="submodule-content">
+        <div class="card module-card">
+          <div class="module-header">
+            <div>
+              <h3>Visual Feature Drift Monitoring</h3>
+              <p>Detects camera shifts, lighting variations, and fabric texture drift against nominal baselines.</p>
+            </div>
+            <span class="pill pill-warning" id="driftStatusPill">Baseline Calibrated</span>
+          </div>
+          <div class="drift-dashboard">
+            <div class="drift-metrics-row">
+              <div class="metric-box">
+                <div class="metric-title">Current Drift Distance</div>
+                <div class="metric-val" id="driftMetricVal">0.366</div>
+                <div class="metric-sub">Warning: 0.35 | Critical: 0.65</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-title">Alert Status</div>
+                <div class="metric-val text-amber" id="driftAlertVal">WARNING</div>
+                <div class="metric-sub">Lighting / texture variance</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-title">Embedding Dimension</div>
+                <div class="metric-val">64-D</div>
+                <div class="metric-sub">HSV + Sobel gradient texture</div>
+              </div>
+            </div>
+            <div class="drift-chart-container">
+              <h4>Rolling Drift Score History</h4>
+              <div class="mock-chart-visual" id="driftChartBars"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Industrial Footer -->
+  <footer class="app-footer-modern">
+    <div class="footer-left">
+      <span class="footer-dot"></span>
+      <strong>FabricQC AI Platform</strong> — Autonomous Garment Inspection System
+    </div>
+    <div class="footer-right">
+      <span>YOLOv8m (Damage) • YOLOv8n (Stitch) • PatchCore Anomaly • Grad-CAM • 3-Node FedAvg</span>
+    </div>
+  </footer>
+
+  <!-- =======================================
+       ENTERPRISE AUTHENTICATION MODAL (SIMULATED OIDC / SSO)
+       ======================================= -->
+  <div class="auth-modal-overlay display-hidden" id="authModalOverlay">
+    <div class="auth-modal-card">
+      <div class="auth-modal-header">
+        <div class="auth-header-title">
+          <span class="auth-icon-shield">🔐</span>
+          <div>
+            <h3>Demo Authentication Mode</h3>
+            <p>Simulated Enterprise OIDC Identity Provider with RFC 7519 JWT & RBAC</p>
+          </div>
+        </div>
+        <button class="auth-modal-close" id="closeAuthModalBtn" type="button">✕</button>
+      </div>
+
+      <div class="auth-disclaimer-box">
+        <strong>⚠️ Enterprise Security Notice:</strong>
+        Demo authentication mode is provided for testing and evaluation. In production environments, 
+        authentication is delegated to an Enterprise OIDC Provider (e.g. Okta, Azure AD) with FIDO2 / YubiKey Hardware Multi-Factor Authentication (MFA).
+      </div>
+
+      <div class="auth-persona-section">
+        <h4>Select Role Persona to Sign In:</h4>
+        <div class="persona-grid">
+          <!-- Admin Persona -->
+          <button class="persona-btn" data-persona="admin" type="button">
+            <div class="persona-icon">🛡️</div>
+            <div class="persona-details">
+              <div class="persona-name">Chief Security Admin</div>
+              <div class="persona-role">Role: ADMIN • All Factories</div>
+              <div class="persona-desc">Full access: user administration, FL rounds control, and security logs.</div>
+            </div>
+          </button>
+
+          <!-- Factory 2 Operator (Tirupur) -->
+          <button class="persona-btn" data-persona="operator_tirupur" type="button">
+            <div class="persona-icon">🧵</div>
+            <div class="persona-details">
+              <div class="persona-name">Tirupur Line Operator</div>
+              <div class="persona-role">Role: FACTORY_OPERATOR • Factory_2 (Tirupur)</div>
+              <div class="persona-desc">Inspects Tirupur apparel. Confined by OWASP BOLA to Factory 2.</div>
+            </div>
+          </button>
+
+          <!-- Factory 1 Operator (Coimbatore) -->
+          <button class="persona-btn" data-persona="operator_coimbatore" type="button">
+            <div class="persona-icon">🧶</div>
+            <div class="persona-details">
+              <div class="persona-name">Coimbatore Mill Operator</div>
+              <div class="persona-role">Role: FACTORY_OPERATOR • Factory_1 (Coimbatore)</div>
+              <div class="persona-desc">Inspects Coimbatore knits. Confined by OWASP BOLA to Factory 1.</div>
+            </div>
+          </button>
+
+          <!-- ML Engineer -->
+          <button class="persona-btn" data-persona="ml_engineer" type="button">
+            <div class="persona-icon">⚡</div>
+            <div class="persona-details">
+              <div class="persona-name">Lead ML/FL Engineer</div>
+              <div class="persona-role">Role: ML_ENGINEER • Global Scope</div>
+              <div class="persona-desc">Manages model benchmarks, triggers FedAvg aggregation, and monitors drift.</div>
+            </div>
+          </button>
+
+          <!-- Compliance Auditor -->
+          <button class="persona-btn" data-persona="auditor" type="button">
+            <div class="persona-icon">📋</div>
+            <div class="persona-details">
+              <div class="persona-name">Compliance & Safety Auditor</div>
+              <div class="persona-role">Role: AUDITOR • Read-Only Scope</div>
+              <div class="persona-desc">Audit inspection trails, mTLS node certificates, and replay defenses.</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Claims Inspector -->
+      <div class="auth-claims-inspector" id="claimsInspectorBox">
+        <div class="claims-header">
+          <span>Active JWT Claims (RFC 7519 Payload)</span>
+          <span class="token-status-pill" id="tokenStatusPill">No Active Token</span>
+        </div>
+        <pre class="claims-json" id="claimsJsonDisplay">// Sign in above to generate and inspect signed JWT</pre>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

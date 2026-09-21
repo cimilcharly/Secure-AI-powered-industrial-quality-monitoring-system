@@ -1,0 +1,14 @@
+# Dress defect dataset configuration
+# Put images and YOLO .txt labels into the matching train/val/test folders.
+
+path: dataset
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: defect
+  # Add your actual classes, for example:
+  # 1: stain
+  # 2: hole
+  # 3: tear
